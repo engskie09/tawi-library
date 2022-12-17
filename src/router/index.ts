@@ -7,8 +7,22 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/LoginView.vue'),
     },
     {
+        path: '/signup',
+        name: 'signup',
+        component: () => import('@/views/SignUpView.vue'),
+    },
+    {
         path: '/library',
-        name: 'library',
+        redirect: '/library/table',
+    },
+    {
+        path: '/library/form',
+        name: 'libraryForm',
+        component: () => import('@/views/LibraryView.vue'),
+    },
+    {
+        path: '/library/table',
+        name: 'libraryTable',
         component: () => import('@/views/LibraryView.vue'),
     },
 ];
