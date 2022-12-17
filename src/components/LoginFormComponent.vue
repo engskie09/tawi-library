@@ -3,15 +3,17 @@
         <div class="row g-3">
             <div class="col-md-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="" value="" required />
+                <input v-model="email" type="email" class="form-control" id="email" placeholder="" required />
                 <div class="invalid-feedback">email is required.</div>
             </div>
 
             <div class="col-md-12">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="" value="" required />
+                <input v-model="password" type="password" class="form-control" id="password" placeholder="" required />
                 <div class="invalid-feedback">password is required.</div>
             </div>
+
+            <div v-if="error" class="alert alert-danger">{{ error }}</div>
         </div>
 
         <hr class="my-4" />
@@ -21,12 +23,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'LoginFormComponent',
+    setup() {
+        const email = ref('');
+        const password = ref('');
+        const error = ref('');
+
+        const store = useStore();
+        const router = useRouter();
+
+        return { email, password, error, store, router };
+    },
     methods: {
-        handleOnSubmit(event: Event) {
+        async handleOnSubmit(event: Event) {
             event.preventDefault();
             if (event.target) {
                 const element = event.target as HTMLFormElement;
@@ -35,6 +49,17 @@ export default defineComponent({
                 if (!isValid) {
                     event.preventDefault();
                     event.stopPropagation();
+                } else {
+                    try {
+                        await this.store.dispatch('login', {
+                            email: this.email,
+                            password: this.password,
+                        });
+
+                        this.router.push('/library/table');
+                    } catch (error) {
+                        this.error = (error as Error).message;
+                    }
                 }
 
                 element.classList.add('was-validated');

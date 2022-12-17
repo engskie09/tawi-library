@@ -34,7 +34,7 @@ export default createStore({
             }
         },
 
-        async logIn(context, { email, password }) {
+        async login(context, { email, password }) {
             const response = await signInWithEmailAndPassword(auth, email, password);
 
             if (response) {
@@ -44,7 +44,7 @@ export default createStore({
             }
         },
 
-        async logOut(context) {
+        async logout(context) {
             await signOut(auth);
 
             context.commit('SET_USER', null);
