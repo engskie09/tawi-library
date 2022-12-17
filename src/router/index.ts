@@ -18,12 +18,12 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/library/form',
         name: 'libraryForm',
-        component: () => import('@/views/LibraryView.vue'),
+        component: () => import('@/views/LibraryFormView.vue'),
     },
     {
         path: '/library/table',
         name: 'libraryTable',
-        component: () => import('@/views/LibraryView.vue'),
+        component: () => import('@/views/LibraryTableView.vue'),
     },
 ];
 
