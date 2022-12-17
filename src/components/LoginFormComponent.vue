@@ -2,9 +2,9 @@
     <form class="needs-validation" novalidate @submit="handleOnSubmit">
         <div class="row g-3">
             <div class="col-md-12">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="" value="" required />
-                <div class="invalid-feedback">username is required.</div>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="" value="" required />
+                <div class="invalid-feedback">email is required.</div>
             </div>
 
             <div class="col-md-12">
