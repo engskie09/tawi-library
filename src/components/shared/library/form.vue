@@ -3,10 +3,11 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
     name: 'LibraryFormShared',
-    props: {},
-};
+});
 </script>
 
 <style scoped></style>
