@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, addDoc, updateDoc, getDoc } from 'firebase/firestore';
+import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCMEI_RvO16EIlT0UBc7zcqsAW9OUEalJ0',
@@ -14,4 +16,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-export { app, auth };
+const db = getFirestore(app);
+
+const bookCollection = collection(db, 'books');
+
+const createBook = async (payload: { name: string; description: string; authors: string; dateCreated: Date }) => {
+    return await addDoc(bookCollection, { ...payload });
+};
+
+export { app, auth, createBook };
