@@ -12,25 +12,35 @@
                 <input v-model="password" type="password" class="form-control" id="password" placeholder="" required />
                 <div class="invalid-feedback">password is required.</div>
             </div>
+
+            <div v-if="error" class="alert alert-danger">{{ error }}</div>
         </div>
 
         <hr class="my-4" />
 
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Login</button>
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Sign Up</button>
     </form>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'SignUpFormComponent',
-    data() {
-        return { email: '', password: '' };
+    setup() {
+        const email = ref('');
+        const password = ref('');
+        const error = ref('');
+
+        const store = useStore();
+        const router = useRouter();
+
+        return { email, password, error, store, router };
     },
     methods: {
-        handleOnSubmit(event: Event) {
+        async handleOnSubmit(event: Event) {
             event.preventDefault();
             if (event.target) {
                 const element = event.target as HTMLFormElement;
@@ -40,16 +50,17 @@ export default defineComponent({
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
-                    console.log(this.email);
-                    console.log(this.password);
-
-                    createUserWithEmailAndPassword(getAuth(), this.email, this.password)
-                        .then(() => {
-                            alert('successfully registered');
-                        })
-                        .catch(() => {
-                            alert('try again');
+                    try {
+                        await this.store.dispatch('register', {
+                            email: this.email,
+                            password: this.password,
+                            name: this.email,
                         });
+
+                        this.router.push('/');
+                    } catch (error) {
+                        this.error = (error as Error).message;
+                    }
                 }
 
                 element.classList.add('was-validated');
