@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, addDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, updateDoc, getDoc, getDocs } from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
@@ -20,8 +20,12 @@ const db = getFirestore(app);
 
 const bookCollection = collection(db, 'books');
 
+const getBooks = async () => {
+    return (await getDocs(bookCollection)).docs.map((doc) => doc.data());
+};
+
 const createBook = async (payload: { name: string; description: string; authors: string; dateCreated: Date }) => {
     return await addDoc(bookCollection, { ...payload });
 };
 
-export { app, auth, createBook };
+export { app, auth, getBooks, createBook };
