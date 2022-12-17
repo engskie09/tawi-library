@@ -18,8 +18,8 @@
                 <td>{{ book.authors }}</td>
                 <td>{{ book.dateCreated }}</td>
                 <td>
-                    <button @click="handleOnClickView" type="button" class="btn btn-info">View</button>
-                    <button @click="handleOnClickDelete" type="button" class="btn btn-danger">Delete</button>
+                    <button @click="handleOnClickView(book.id)" type="button" class="btn btn-info">View</button>
+                    <button @click="handleOnClickDelete(book.id)" type="button" class="btn btn-danger">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -28,9 +28,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { DocumentData } from '@firebase/firestore';
 
 import { getBooks } from '@/firebase';
-import { DocumentData } from '@firebase/firestore';
+import router from '@/router';
 
 export default defineComponent({
     name: 'LibraryTableComponent',
@@ -48,12 +49,12 @@ export default defineComponent({
         console.log(this.books);
     },
     methods: {
-        handleOnClickView: () => {
-            alert('view');
+        handleOnClickView: (id: string) => {
+            router.push({ name: 'libraryFormId', params: { id } });
         },
 
-        handleOnClickDelete: () => {
-            alert('delete');
+        handleOnClickDelete: (id: string) => {
+            alert(id);
         },
     },
 });

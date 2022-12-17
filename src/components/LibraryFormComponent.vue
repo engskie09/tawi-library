@@ -53,6 +53,9 @@ import { createBook } from '@/firebase';
 
 export default defineComponent({
     name: 'LibraryFormComponent',
+    props: {
+        id: String,
+    },
     setup() {
         const name = ref('');
         const description = ref('');
