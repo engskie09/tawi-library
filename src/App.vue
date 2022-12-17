@@ -1,9 +1,14 @@
 <template>
-    <nav>
-        <router-link to="/">Login</router-link> |
-        <router-link to="/library">Library</router-link>
-    </nav>
-    <router-view />
+    <div class="container">
+        <main>
+            <img class="logo" alt="Vue logo" src="@/assets/company-logo-tawi-group-holdings-inc.png" />
+            <nav>
+                <router-link to="/">Login</router-link> |
+                <router-link to="/library">Library</router-link>
+            </nav>
+            <router-view />
+        </main>
+    </div>
 </template>
 
 <style lang="scss">
@@ -26,5 +31,14 @@ nav {
             color: #42b983;
         }
     }
+}
+
+.container {
+    max-width: 960px;
+}
+
+.logo {
+    width: 350px;
+    height: 100px;
 }
 </style>
