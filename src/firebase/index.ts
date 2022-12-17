@@ -21,7 +21,11 @@ const db = getFirestore(app);
 const bookCollection = collection(db, 'books');
 
 const getBooks = async () => {
-    return (await getDocs(bookCollection)).docs.map((doc) => doc.data());
+    return (await getDocs(bookCollection)).docs.map((doc) => {
+        const data = doc.data({ serverTimestamps: 'estimate' });
+        data.id = doc.id;
+        return data;
+    });
 };
 
 const createBook = async (payload: { name: string; description: string; authors: string; dateCreated: Date }) => {
