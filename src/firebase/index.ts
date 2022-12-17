@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, addDoc, updateDoc, getDoc, getDocs, doc } from 'firebase/firestore';
-import firebase from 'firebase/compat/app';
+import { getFirestore, collection, getDoc, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCMEI_RvO16EIlT0UBc7zcqsAW9OUEalJ0',
@@ -36,9 +35,15 @@ const updateBook = async (
     id: string,
     payload: { name: string; description: string; authors: string; dateCreated: Date },
 ) => {
-    const bookRef = doc(db, 'id', id);
+    const bookRef = doc(db, 'books', id);
 
     return await updateDoc(bookRef, { ...payload });
 };
 
-export { app, auth, getBooks, createBook, updateBook };
+const deleteBook = async (id: string) => {
+    const bookRef = doc(db, 'books', id);
+
+    return await deleteDoc(bookRef);
+};
+
+export { app, auth, getBooks, createBook, updateBook, deleteBook };
