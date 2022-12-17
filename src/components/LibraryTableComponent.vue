@@ -30,7 +30,7 @@
 import { defineComponent } from 'vue';
 import { DocumentData } from '@firebase/firestore';
 
-import { getBooks } from '@/firebase';
+import { getBooks, deleteBook } from '@/firebase';
 import router from '@/router';
 
 export default defineComponent({
@@ -53,8 +53,10 @@ export default defineComponent({
             router.push({ name: 'libraryFormId', params: { id } });
         },
 
-        handleOnClickDelete: (id: string) => {
-            alert(id);
+        async handleOnClickDelete(id: string) {
+            await deleteBook(id);
+            this.$data.books = await getBooks();
+            console.log(this.books);
         },
     },
 });

@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { createBook } from '@/firebase';
+import { createBook, updateBook } from '@/firebase';
 
 export default defineComponent({
     name: 'LibraryFormComponent',
@@ -75,12 +75,21 @@ export default defineComponent({
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
-                    await createBook({
-                        name: this.name,
-                        description: this.description,
-                        authors: this.authors,
-                        dateCreated: this.dateCreated,
-                    });
+                    if (this.id) {
+                        await updateBook(this.id, {
+                            name: this.name,
+                            description: this.description,
+                            authors: this.authors,
+                            dateCreated: this.dateCreated,
+                        });
+                    } else {
+                        await createBook({
+                            name: this.name,
+                            description: this.description,
+                            authors: this.authors,
+                            dateCreated: this.dateCreated,
+                        });
+                    }
                 }
 
                 element.classList.add('was-validated');
