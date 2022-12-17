@@ -3,8 +3,8 @@
         <main>
             <img class="logo" alt="Vue logo" src="@/assets/company-logo-tawi-group-holdings-inc.png" />
             <nav>
-                <router-link to="/">Login</router-link> |
-                <router-link to="/library">Library</router-link>
+                <router-link to="/">Login</router-link> | <router-link to="/library">Library</router-link> |
+                <router-link to="/library/form">Add Book</router-link>
             </nav>
             <router-view />
         </main>
