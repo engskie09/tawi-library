@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, collection, getDoc, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCMEI_RvO16EIlT0UBc7zcqsAW9OUEalJ0',
@@ -16,6 +17,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const bookCollection = collection(db, 'books');
 
@@ -44,6 +46,12 @@ const deleteBook = async (id: string) => {
     const bookRef = doc(db, 'books', id);
 
     return await deleteDoc(bookRef);
+};
+
+const uploadBookIcon = async (file: File) => {
+    const storageRef = ref(storage, 'icons/' + file.name);
+    await uploadBytes(storageRef, file);
+    return;
 };
 
 export { app, auth, getBooks, createBook, updateBook, deleteBook };
