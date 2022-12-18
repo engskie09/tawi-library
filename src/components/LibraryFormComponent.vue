@@ -48,7 +48,7 @@
                     class="form-control"
                     id="12"
                     placeholder=""
-                    required
+                    :required="isIconRequired"
                 />
                 <div class="invalid-feedback">icon is required.</div>
             </div>
@@ -62,7 +62,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { createBook, updateBook, uploadBookIcon } from '@/firebase';
+import { createBook, updateBook, uploadBookIcon, getBook } from '@/firebase';
+import router from '@/router';
 
 export default defineComponent({
     name: 'LibraryFormComponent',
@@ -75,9 +76,24 @@ export default defineComponent({
         const authors = ref('');
         const dateCreated = ref(new Date());
         const icon = ref(new File([], ''));
+        const isIconRequired = ref(true);
 
-        return { name, description, authors, dateCreated, icon };
+        return { name, description, authors, dateCreated, icon, isIconRequired };
     },
+
+    async mounted() {
+        if (this.id) {
+            const book = await getBook(this.id);
+            if (book) {
+                this.name = book.name;
+                this.description = book.description;
+                this.authors = book.authors;
+                this.dateCreated = book.dateCreated;
+                this.isIconRequired = false;
+            }
+        }
+    },
+
     methods: {
         async handleOnSubmit(event: Event) {
             event.preventDefault();
@@ -96,6 +112,8 @@ export default defineComponent({
                             authors: this.authors,
                             dateCreated: this.dateCreated,
                         });
+
+                        router.push({ name: 'libraryTable' });
                     } else {
                         const iconPath = await uploadBookIcon(this.icon);
 
@@ -106,6 +124,8 @@ export default defineComponent({
                             dateCreated: this.dateCreated,
                             icon: iconPath,
                         });
+
+                        router.push({ name: 'libraryTable' });
                     }
                 }
 
