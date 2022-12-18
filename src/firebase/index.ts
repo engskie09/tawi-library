@@ -29,6 +29,19 @@ const getBooks = async () => {
     });
 };
 
+const getBook = async (id: string) => {
+    const bookRef = doc(db, 'books', id);
+    const docSnap = await getDoc(bookRef);
+
+    const data = docSnap.data({ serverTimestamps: 'estimate' });
+
+    if (data) {
+        data.id = docSnap.id;
+    }
+
+    return data;
+};
+
 const createBook = async (payload: {
     name: string;
     description: string;
@@ -60,4 +73,4 @@ const uploadBookIcon = async (file: File) => {
     return await getDownloadURL(storageRef);
 };
 
-export { app, auth, getBooks, createBook, updateBook, deleteBook, uploadBookIcon };
+export { app, auth, getBooks, getBook, createBook, updateBook, deleteBook, uploadBookIcon };
