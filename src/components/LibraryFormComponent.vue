@@ -3,7 +3,16 @@
         <div class="row g-3">
             <div class="col-md-12">
                 <label for="name" class="form-label">Name</label>
-                <input v-model="name" type="text" class="form-control" id="name" placeholder="" required />
+                <input
+                    v-model="name"
+                    v-on:keypress="handleNameOnKeypress"
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder=""
+                    maxlength="50"
+                    required
+                />
                 <div class="invalid-feedback">name is required.</div>
             </div>
 
@@ -11,11 +20,13 @@
                 <label for="description" class="form-label">Description</label>
                 <textarea
                     v-model="description"
+                    v-on:keypress="handleDescriptionOnKeypress"
                     type="text"
                     class="form-control"
                     id="description"
                     placeholder=""
                     rows="3"
+                    maxlength="100"
                     required
                 ></textarea>
                 <div class="invalid-feedback">description is required.</div>
@@ -130,6 +141,18 @@ export default defineComponent({
                 }
 
                 element.classList.add('was-validated');
+            }
+        },
+
+        async handleNameOnKeypress(event: KeyboardEvent) {
+            if (!/^[a-z0-9]+$/i.test(event.key)) {
+                event.preventDefault();
+            }
+        },
+
+        async handleDescriptionOnKeypress(event: KeyboardEvent) {
+            if (!/^[a-z0-9]+$/i.test(event.key)) {
+                event.preventDefault();
             }
         },
 
