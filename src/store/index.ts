@@ -24,7 +24,7 @@ export default createStore({
         },
     },
     actions: {
-        async register(context, { email, password, name }) {
+        async register(context, { email, password }) {
             const response = await createUserWithEmailAndPassword(auth, email, password);
 
             if (response) {

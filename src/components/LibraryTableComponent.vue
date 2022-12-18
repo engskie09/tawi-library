@@ -39,10 +39,6 @@ import router from '@/router';
 
 export default defineComponent({
     name: 'LibraryTableComponent',
-    setup() {
-        // const books: DocumentData[] = [];
-        // return { books };
-    },
     data() {
         return {
             books: [] as DocumentData[],
@@ -60,7 +56,6 @@ export default defineComponent({
         async handleOnClickDelete(id: string) {
             await deleteBook(id);
             this.$data.books = await getBooks();
-            console.log(this.books);
         },
     },
 });
