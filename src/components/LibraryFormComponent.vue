@@ -34,7 +34,16 @@
 
             <div class="col-md-12">
                 <label for="authors" class="form-label">Authors</label>
-                <input v-model="authors" type="text" class="form-control" id="authors" placeholder="" required />
+                <input
+                    v-model="authors"
+                    v-on:keypress="handleAuthorsOnKeypress"
+                    type="text"
+                    class="form-control"
+                    id="authors"
+                    placeholder=""
+                    maxlength="100"
+                    required
+                />
                 <div class="invalid-feedback">authors is required.</div>
             </div>
 
@@ -42,7 +51,8 @@
                 <label for="dateCreated" class="form-label">Date Created</label>
                 <input
                     v-model="dateCreated"
-                    type="date"
+                    v-on:keypress="handleDateCreatedOnKeypress"
+                    type="number"
                     class="form-control"
                     id="dateCreated"
                     placeholder=""
@@ -85,7 +95,7 @@ export default defineComponent({
         const name = ref('');
         const description = ref('');
         const authors = ref('');
-        const dateCreated = ref(new Date());
+        const dateCreated = ref(0);
         const icon = ref(new File([], ''));
         const isIconRequired = ref(true);
 
@@ -152,6 +162,18 @@ export default defineComponent({
 
         async handleDescriptionOnKeypress(event: KeyboardEvent) {
             if (!/^[a-z0-9]+$/i.test(event.key)) {
+                event.preventDefault();
+            }
+        },
+
+        async handleAuthorsOnKeypress(event: KeyboardEvent) {
+            if (!/^[a-z0-9.-]+$/i.test(event.key)) {
+                event.preventDefault();
+            }
+        },
+
+        async handleDateCreatedOnKeypress(event: KeyboardEvent) {
+            if (!/^[0-9]+$/i.test(event.key)) {
                 event.preventDefault();
             }
         },

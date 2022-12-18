@@ -46,7 +46,7 @@ const createBook = async (payload: {
     name: string;
     description: string;
     authors: string;
-    dateCreated: Date;
+    dateCreated: number;
     icon: string;
 }) => {
     return await addDoc(bookCollection, { ...payload });
@@ -54,7 +54,7 @@ const createBook = async (payload: {
 
 const updateBook = async (
     id: string,
-    payload: { name: string; description: string; authors: string; dateCreated: Date },
+    payload: { name: string; description: string; authors: string; dateCreated: number },
 ) => {
     const bookRef = doc(db, 'books', id);
 

@@ -20,7 +20,7 @@
                 <th scope="row">{{ book.name }}</th>
                 <td>{{ book.description }}</td>
                 <td>{{ book.authors }}</td>
-                <td>{{ book.dateCreated }}</td>
+                <td>{{ new Date(book.dateCreated) }}</td>
                 <td>
                     <button @click="handleOnClickView(book.id)" type="button" class="btn btn-info">View</button>
                     <button @click="handleOnClickDelete(book.id)" type="button" class="btn btn-danger">Delete</button>
@@ -67,7 +67,7 @@ button {
     margin: 2px;
 }
 .book-icon {
-    width: 100%;
-    height: 60px;
+    width: 250px;
+    height: 100%;
 }
 </style>
