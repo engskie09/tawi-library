@@ -39,6 +39,19 @@
                 />
                 <div class="invalid-feedback">date created is required.</div>
             </div>
+
+            <div class="col-md-12">
+                <label for="icon" class="form-label">Icon</label>
+                <input
+                    v-on:change="handleIconOnChange"
+                    type="file"
+                    class="form-control"
+                    id="12"
+                    placeholder=""
+                    required
+                />
+                <div class="invalid-feedback">icon is required.</div>
+            </div>
         </div>
 
         <hr class="my-4" />
@@ -49,7 +62,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { createBook, updateBook } from '@/firebase';
+import { createBook, updateBook, uploadBookIcon } from '@/firebase';
 
 export default defineComponent({
     name: 'LibraryFormComponent',
@@ -61,8 +74,9 @@ export default defineComponent({
         const description = ref('');
         const authors = ref('');
         const dateCreated = ref(new Date());
+        const icon = ref(new File([], ''));
 
-        return { name, description, authors, dateCreated };
+        return { name, description, authors, dateCreated, icon };
     },
     methods: {
         async handleOnSubmit(event: Event) {
@@ -83,16 +97,28 @@ export default defineComponent({
                             dateCreated: this.dateCreated,
                         });
                     } else {
+                        const iconPath = await uploadBookIcon(this.icon);
+
                         await createBook({
                             name: this.name,
                             description: this.description,
                             authors: this.authors,
                             dateCreated: this.dateCreated,
+                            icon: iconPath,
                         });
                     }
                 }
 
                 element.classList.add('was-validated');
+            }
+        },
+
+        async handleIconOnChange(event: Event) {
+            const element = event.target as HTMLInputElement;
+            const file = element.files ? element.files[0] : null;
+
+            if (file) {
+                this.icon = file;
             }
         },
     },

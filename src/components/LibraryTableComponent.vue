@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Icon</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Authors</th>
@@ -13,6 +14,9 @@
         <tbody>
             <tr v-for="(book, index) in books" v-bind:key="index">
                 <th>{{ book.id }}</th>
+                <th>
+                    <img class="book-icon" :src="book.icon" />
+                </th>
                 <th scope="row">{{ book.name }}</th>
                 <td>{{ book.description }}</td>
                 <td>{{ book.authors }}</td>
@@ -66,5 +70,9 @@ export default defineComponent({
 button {
     min-width: 80px;
     margin: 2px;
+}
+.book-icon {
+    width: 100%;
+    height: 60px;
 }
 </style>
