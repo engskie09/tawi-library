@@ -54,7 +54,7 @@ const createBook = async (payload: {
 
 const updateBook = async (
     id: string,
-    payload: { name: string; description: string; authors: string; dateCreated: number },
+    payload: { name: string; description: string; authors: string; dateCreated: number; icon?: string },
 ) => {
     const bookRef = doc(db, 'books', id);
 

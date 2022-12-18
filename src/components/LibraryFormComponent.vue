@@ -127,12 +127,24 @@ export default defineComponent({
                     event.stopPropagation();
                 } else {
                     if (this.id) {
-                        await updateBook(this.id, {
-                            name: this.name,
-                            description: this.description,
-                            authors: this.authors,
-                            dateCreated: this.dateCreated,
-                        });
+                        if (this.icon) {
+                            const iconPath = await uploadBookIcon(this.icon);
+
+                            await updateBook(this.id, {
+                                name: this.name,
+                                description: this.description,
+                                authors: this.authors,
+                                dateCreated: this.dateCreated,
+                                icon: iconPath,
+                            });
+                        } else {
+                            await updateBook(this.id, {
+                                name: this.name,
+                                description: this.description,
+                                authors: this.authors,
+                                dateCreated: this.dateCreated,
+                            });
+                        }
 
                         router.push({ name: 'libraryTable' });
                     } else {
